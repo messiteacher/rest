@@ -24,7 +24,7 @@ public class BaseInitData {
     public ApplicationRunner applicationRunner() {
 
         return args -> {
-            System.out.println("Hello, Spring Boot!");
+            self.init();
         };
     }
 
