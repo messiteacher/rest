@@ -19,7 +19,6 @@ public class BaseInitData {
     @Lazy
     private BaseInitData self;
 
-
     @Bean
     public ApplicationRunner applicationRunner() {
 
