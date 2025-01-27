@@ -15,9 +15,9 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public void write(String title, String content) {
+    public Post write(String title, String content) {
 
-        postRepository.save(Post.builder()
+        return postRepository.save(Post.builder()
                 .title(title)
                 .content(content)
                 .build());
