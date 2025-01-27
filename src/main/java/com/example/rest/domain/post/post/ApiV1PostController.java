@@ -20,12 +20,11 @@ public class ApiV1PostController {
     private final PostService postService;
 
     @GetMapping
-    @ResponseBody
     public List<Post> getItems() {
         return postService.getItems();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public Post getItem(@PathVariable long id) {
         return postService.getItem(id).get();
     }
@@ -38,38 +37,31 @@ public class ApiV1PostController {
 
         return new RsData(
                 "200-1",
-                "%d번 글 삭제가 완료되었습니다.".formatted(id));
-    }
-    @AllArgsConstructor
-    @Getter
-    public static class ModifyForm {
-
-        public String title;
-        public String content;
+                "%d번 글 삭제가 완료되었습니다.".formatted(id)
+        );
     }
 
-    @PutMapping("/{id}")
-    public RsData modify(@PathVariable long id, @RequestBody ModifyForm form) {
+    record ModifyReqBody(String title, String content) {}
+
+    @PutMapping("{id}")
+    public RsData modify(@PathVariable long id, @RequestBody ModifyReqBody body) {
 
         Post post = postService.getItem(id).get();
-        postService.modify(post, form.getTitle(), form.getContent());
+        postService.modify(post, body.title(), body.content());
 
         return new RsData(
                 "200-1",
-                "%d번 글 수정이 완료되었습니다.".formatted(id));
+                "%d번 글 수정이 완료되었습니다.".formatted(id)
+        );
     }
 
-    @AllArgsConstructor
-    @Getter
-    public static class WriteForm {
+    record WriteReqBody(String title, String content) {}
 
-        private String title;
-        private String content;
-    }
     @PostMapping
-    public RsData write(@RequestBody WriteForm form) {
+    public RsData write(@RequestBody WriteReqBody body) {
 
-        postService.write(form.getTitle(), form.getContent());
+        postService.write(body.title(), body.content());
+
         return new RsData(
                 "200-1",
                 "글 작성이 완료되었습니다."
