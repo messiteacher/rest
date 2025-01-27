@@ -82,14 +82,18 @@ public class ApiV1PostController {
     record WriteReqBody(@NotBlank @Length(min = 3) String title, @NotBlank @Length(min = 3) String content) {}
 
     @PostMapping
-    public RsData write(@RequestBody @Valid WriteReqBody body) {
+    public RsData<Map<String, Object>> write(@RequestBody @Valid WriteReqBody body) {
 
         Post post = postService.write(body.title(), body.content());
 
-        return new RsData<Long>(
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("id", post.getId());
+        dataMap.put("totalCount", 30);
+
+        return new RsData<>(
                 "200-1",
                 "글 작성이 완료되었습니다.",
-                post.getId()
+                dataMap
         );
     }
 }
