@@ -1,5 +1,6 @@
 package com.example.rest.domain.post.post;
 
+import com.example.rest.domain.post.post.dto.PostDto;
 import com.example.rest.domain.post.post.entity.Post;
 import com.example.rest.domain.post.post.service.PostService;
 import com.example.rest.global.dto.RsData;
@@ -28,8 +29,12 @@ public class ApiV1PostController {
     }
 
     @GetMapping("{id}")
-    public Post getItem(@PathVariable long id) {
-        return postService.getItem(id).get();
+    public PostDto getItem(@PathVariable long id) {
+
+        Post post = postService.getItem(id).get();
+        PostDto postDto = new PostDto(post);
+
+        return postDto;
     }
 
     @DeleteMapping("/{id}")
