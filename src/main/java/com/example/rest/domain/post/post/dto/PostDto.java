@@ -18,7 +18,8 @@ public class PostDto {
     private LocalDateTime modifiedDate;
     private String title;
     private String content;
-    private MemberDto author;
+    private long authorId;
+    private String authorName;
 
     public PostDto(Post post) {
 
@@ -27,6 +28,7 @@ public class PostDto {
         this.modifiedDate = post.getModifiedDate();
         this.title = post.getTitle();
         this.content = post.getContent();
-        this.author = new MemberDto(post.getAuthor());
+        this.authorId = post.getAuthor().getId();
+        this.authorName = post.getAuthor().getNickName();
     }
 }
