@@ -45,8 +45,8 @@ public class GlobalExceptionHandler {
                 ));
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<RsData<Void>> IllegalArgumentExceptionHandle(IllegalArgumentException e) {
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<RsData<Void>> IllegalArgumentExceptionHandle(RuntimeException e) {
 
         if (AppConfig.isNotProd()) e.printStackTrace();
 
