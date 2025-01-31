@@ -1,6 +1,8 @@
 package com.example.rest.global.aspect;
 
 import com.example.rest.global.dto.RsData;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -8,7 +10,10 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class ResponseAspect {
+
+    private final HttpServletResponse response;
 
     @Around("""
             (
@@ -38,10 +43,9 @@ public class ResponseAspect {
         if (rst instanceof RsData rsData) {
 
             String msg = rsData.getMsg();
-            System.out.println("msg = " + msg);
-        }
 
-        System.out.println("post");
+            response.setStatus(201);
+        }
 
         return rst;
     }
