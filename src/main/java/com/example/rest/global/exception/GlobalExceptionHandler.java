@@ -14,7 +14,9 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<RsData<Void>>  handle() {
+    public ResponseEntity<RsData<Void>>  handle(NoSuchElementException e) {
+
+        e.printStackTrace();
 
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
@@ -24,20 +26,20 @@ public class GlobalExceptionHandler {
         ));
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<RsData<Void>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-
-        String message = e.getBindingResult().getFieldErrors()
-                .stream()
-                .map(fe -> fe.getField() + " : " + fe.getCode() + " : " + fe.getDefaultMessage())
-                .sorted()
-                .collect(Collectors.joining("\n"));
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(new RsData<>(
-                        "400-1",
-                        message
-                ));
-    }
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public ResponseEntity<RsData<Void>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+//
+//        String message = e.getBindingResult().getFieldErrors()
+//                .stream()
+//                .map(fe -> fe.getField() + " : " + fe.getCode() + " : " + fe.getDefaultMessage())
+//                .sorted()
+//                .collect(Collectors.joining("\n"));
+//
+//        return ResponseEntity
+//                .status(HttpStatus.NOT_FOUND)
+//                .body(new RsData<>(
+//                        "400-1",
+//                        message
+//                ));
+//    }
 }
