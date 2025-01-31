@@ -51,9 +51,9 @@ public class GlobalExceptionHandler {
         if (AppConfig.isNotProd()) e.printStackTrace();
 
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.CONFLICT)
                 .body(new RsData<>(
-                        "404-1",
+                        "409-1",
                         "이미 존재하는 데이터입니다."
                 ));
     }
