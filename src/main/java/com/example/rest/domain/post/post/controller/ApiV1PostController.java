@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -44,8 +45,19 @@ public class ApiV1PostController {
     @GetMapping("{id}")
     public RsData<PostDto> getItem(@PathVariable long id) {
 
-        Post post = postService.getItem(id).get();
-        PostDto postDto = new PostDto(post);
+        Post post = null;
+
+        try {
+
+            post = postService.getItem(id).get();
+        } catch (NoSuchElementException e) {
+
+            return new RsData<> (
+                    "404-1",
+                    "%d번 글이 존재하지 않습니다.".formatted(id),
+                    null
+            );
+        }
 
         return new RsData<> (
                 "200-1",
